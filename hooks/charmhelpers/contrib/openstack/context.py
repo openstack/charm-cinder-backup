@@ -98,7 +98,6 @@ from charmhelpers.contrib.network.ip import (
 from charmhelpers.contrib.openstack.utils import (
     config_flags_parser,
     enable_memcache,
-    snap_install_requested,
     CompareOpenStackReleases,
     os_release,
 )
@@ -252,13 +251,8 @@ class SharedDBContext(OSContextGenerator):
                     'database': self.database,
                     'database_user': self.user,
                     'database_password': rdata.get(password_setting),
-                    'database_type': 'mysql'
+                    'database_type': 'mysql+pymysql'
                 }
-                # Note(coreycb): We can drop mysql+pymysql if we want when the
-                # following review lands, though it seems mysql+pymysql would
-                # be preferred. https://review.openstack.org/#/c/462190/
-                if snap_install_requested():
-                    ctxt['database_type'] = 'mysql+pymysql'
                 if self.context_complete(ctxt):
                     db_ssl(rdata, ctxt, self.ssl_dir)
                     return ctxt
@@ -642,7 +636,7 @@ class HAProxyContext(OSContextGenerator):
             return {}
 
         l_unit = local_unit().replace('/', '-')
-        cluster_hosts = {}
+        cluster_hosts = collections.OrderedDict()
 
         # NOTE(jamespage): build out map of configured network endpoints
         # and associated backends
@@ -1523,10 +1517,6 @@ class NeutronAPIContext(OSContextGenerator):
                 'rel_key': 'enable-nsg-logging',
                 'default': False,
             },
-            'nsg_log_output_base': {
-                'rel_key': 'nsg-log-output-base',
-                'default': None,
-            },
         }
         ctxt = self.get_neutron_options({})
         for rid in relation_ids('neutron-plugin-api'):
@@ -1538,10 +1528,15 @@ class NeutronAPIContext(OSContextGenerator):
                 if 'l2-population' in rdata:
                     ctxt.update(self.get_neutron_options(rdata))
 
+        extension_drivers = []
+
         if ctxt['enable_qos']:
-            ctxt['extension_drivers'] = 'qos'
-        else:
-            ctxt['extension_drivers'] = ''
+            extension_drivers.append('qos')
+
+        if ctxt['enable_nsg_logging']:
+            extension_drivers.append('log')
+
+        ctxt['extension_drivers'] = ','.join(extension_drivers)
 
         return ctxt
 
@@ -1901,7 +1896,7 @@ class EnsureDirContext(OSContextGenerator):
     Some software requires a user to create a target directory to be
     scanned for drop-in files with a specific format. This is why this
     context is needed to do that before rendering a template.
-   '''
+    '''
 
     def __init__(self, dirname, **kwargs):
         '''Used merely to ensure that a given directory exists.'''
@@ -1911,3 +1906,23 @@ class EnsureDirContext(OSContextGenerator):
     def __call__(self):
         mkdir(self.dirname, **self.kwargs)
         return {}
+
+
+class VersionsContext(OSContextGenerator):
+    """Context to return the openstack and operating system versions.
+
+    """
+    def __init__(self, pkg='python-keystone'):
+        """Initialise context.
+
+        :param pkg: Package to extrapolate openstack version from.
+        :type pkg: str
+        """
+        self.pkg = pkg
+
+    def __call__(self):
+        ostack = os_release(self.pkg, base='icehouse')
+        osystem = lsb_release()['DISTRIB_CODENAME'].lower()
+        return {
+            'openstack_release': ostack,
+            'operating_system_release': osystem}
