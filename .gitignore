@@ -6,3 +6,4 @@ bin
 *.py[oc]
 *.pyc
 func-results.json
+.stestr

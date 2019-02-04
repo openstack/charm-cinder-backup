@@ -99,7 +99,7 @@ def restart_map():
                     that should be restarted when file changes.
     """
     _map = []
-    for f, ctxt in CONFIG_FILES.iteritems():
+    for f, ctxt in CONFIG_FILES.items():
         svcs = []
         for svc in ctxt['services']:
             svcs.append(svc)
@@ -111,9 +111,10 @@ def restart_map():
 def set_ceph_env_variables(service):
     # XXX: Horrid kludge to make cinder-backup use
     # a different ceph username than admin
-    env = open('/etc/environment', 'r').read()
+    with open('/etc/environment', 'rt') as f:
+        env = f.read()
     if 'CEPH_ARGS' not in env:
-        with open('/etc/environment', 'a') as out:
+        with open('/etc/environment', 'at') as out:
             out.write('CEPH_ARGS="--id %s"\n' % service)
-    with open('/etc/init/cinder-backup.override', 'w') as out:
+    with open('/etc/init/cinder-backup.override', 'wt') as out:
         out.write('env CEPH_ARGS="--id %s"\n' % service)

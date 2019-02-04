@@ -35,7 +35,7 @@ def load_config():
 
     if not config:
         logging.error('Could not find config.yaml in any parent directory '
-                      'of %s. ' % __file__)
+                      'of %s.'.format(__file__))
         raise Exception
 
     return yaml.safe_load(open(config).read())['options']
@@ -47,7 +47,7 @@ def get_default_config():
     """
     default_config = {}
     config = load_config()
-    for k, v in config.iteritems():
+    for k, v in config.items():
         if 'default' in v:
             default_config[k] = v['default']
         else:
