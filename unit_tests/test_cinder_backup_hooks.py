@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from mock import patch
+import mock
 
-with patch('cinder_backup_utils.register_configs'):
+with mock.patch('cinder_backup_utils.register_configs'):
     import cinder_backup_hooks as hooks
 
 from test_utils import (
@@ -52,16 +52,16 @@ class TestCinderBackupHooks(CharmTestCase):
         super(TestCinderBackupHooks, self).setUp(hooks, TO_PATCH)
         self.config.side_effect = self.test_config.get
 
-    @patch('charmhelpers.core.hookenv.config')
-    @patch('os.mkdir')
+    @mock.patch('charmhelpers.core.hookenv.config')
+    @mock.patch('os.mkdir')
     def test_ceph_joined(self, mkdir, mock_config):
         """It correctly prepares for a ceph changed hook"""
-        with patch('os.path.isdir') as isdir:
+        with mock.patch('os.path.isdir') as isdir:
             isdir.return_value = False
             hooks.hooks.execute(['hooks/ceph-relation-joined'])
             mkdir.assert_called_with('/etc/ceph')
 
-    @patch('charmhelpers.core.hookenv.config')
+    @mock.patch('charmhelpers.core.hookenv.config')
     def test_ceph_changed_no_key(self, mock_config):
         """It does nothing when ceph key is not available"""
         self.CONFIGS.complete_contexts.return_value = ['']
@@ -69,7 +69,7 @@ class TestCinderBackupHooks(CharmTestCase):
         m = 'ceph relation incomplete. Peer not ready?'
         self.log.assert_called_with(m)
 
-    @patch('charmhelpers.core.hookenv.config')
+    @mock.patch('charmhelpers.core.hookenv.config')
     def test_ceph_changed(self, mock_config):
         """It ensures ceph assets created on ceph changed"""
         self.is_request_complete.return_value = True
@@ -83,8 +83,8 @@ class TestCinderBackupHooks(CharmTestCase):
         self.assertTrue(self.CONFIGS.write_all.called)
         self.set_ceph_env_variables.assert_called_with(service='cinder-backup')
 
-    @patch.object(hooks, 'get_ceph_request')
-    @patch('charmhelpers.core.hookenv.config')
+    @mock.patch.object(hooks, 'get_ceph_request')
+    @mock.patch('charmhelpers.core.hookenv.config')
     def test_ceph_changed_newrq(self, mock_config, mock_get_ceph_request):
         """It ensures ceph assets created on ceph changed"""
         mock_get_ceph_request.return_value = 'cephreq'
@@ -98,7 +98,7 @@ class TestCinderBackupHooks(CharmTestCase):
                                                     group='cinder')
         self.send_request_if_needed.assert_called_with('cephreq')
 
-    @patch('charmhelpers.core.hookenv.config')
+    @mock.patch('charmhelpers.core.hookenv.config')
     def test_ceph_changed_no_keys(self, mock_config):
         """It ensures ceph assets created on ceph changed"""
         self.CONFIGS.complete_contexts.return_value = ['ceph']
@@ -110,3 +110,17 @@ class TestCinderBackupHooks(CharmTestCase):
         # the hook should just exit 0 and return.
         self.assertTrue(self.log.called)
         self.assertFalse(self.CONFIGS.write_all.called)
+
+    @mock.patch.object(hooks, 'CephBrokerRq')
+    @mock.patch.object(hooks, 'config')
+    @mock.patch.object(hooks, 'service_name')
+    def test_ceph_request(self, _service_name, _config, _ceph_broker_rq):
+        _service_name.return_value = 'cinder-backup'
+        _config.return_value = None
+        rq = mock.MagicMock()
+        _ceph_broker_rq.return_value = rq
+        self.assertEqual(hooks.get_ceph_request(), rq)
+        _service_name.assert_called_once_with()
+        _config.assert_called_once_with('ceph-osd-replication-count')
+        rq.add_op_create_pool.assert_called_once_with(
+            name='cinder-backup', replica_count=_config(), app_name='rbd')

@@ -81,7 +81,7 @@ def get_ceph_request():
     service = service_name()
     rq = CephBrokerRq()
     replicas = config('ceph-osd-replication-count')
-    rq.add_op_create_pool(name=service, replica_count=replicas)
+    rq.add_op_create_pool(name=service, replica_count=replicas, app_name='rbd')
     return rq
 
 
