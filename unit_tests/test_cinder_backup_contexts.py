@@ -46,6 +46,20 @@ class TestCinderBackupContext(CharmTestCase):
                                          ('backup_ceph_user',
                                           'cinder-backup-ut')]}}}}
         self.assertEqual(ctxt, exp)
+        self.get_os_codename_package.return_value = 'stein'
+        exp = {'cinder': {'/etc/cinder/cinder.conf':
+                          {'sections': {'DEFAULT':
+                                        [('backup_driver',
+                                          'cinder.backup.drivers.ceph.'
+                                          'CephBackupDriver'),
+                                         ('backup_ceph_conf',
+                                          '/var/lib/charm/'
+                                          'cinder-backup-ut/ceph.conf'),
+                                         ('backup_ceph_pool',
+                                          'cinder-backup-ut'),
+                                         ('backup_ceph_user',
+                                          'cinder-backup-ut')]}}}}
+        self.assertEqual(contexts.CephBackupSubordinateContext()(), exp)
 
     def test_backup_context_unsupported(self):
         self.get_os_codename_package.return_value = 'havana'

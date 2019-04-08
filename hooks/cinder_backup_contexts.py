@@ -42,7 +42,10 @@ class CephBackupSubordinateContext(OSContextGenerator):
             raise Exception("Unsupported version of Openstack")
 
         service = service_name()
-        backup_driver = 'cinder.backup.drivers.ceph'
+        if CompareOpenStackReleases(release) >= "stein":
+            backup_driver = 'cinder.backup.drivers.ceph.CephBackupDriver'
+        else:
+            backup_driver = 'cinder.backup.drivers.ceph'
         return {
             "cinder": {
                 "/etc/cinder/cinder.conf": {

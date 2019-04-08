@@ -335,9 +335,13 @@ class CinderBackupBasicDeployment(OpenStackAmuletDeployment):
         unit = self.cinder_backup_sentry
         relation = ['backup-backend', 'cinder:backup-backend']
 
+        if self._get_openstack_release() >= self.bionic_stein:
+            backup_driver = 'cinder.backup.drivers.ceph.CephBackupDriver'
+        else:
+            backup_driver = 'cinder.backup.drivers.ceph'
         sub = ('{"cinder": {"/etc/cinder/cinder.conf": {"sections": '
                '{"DEFAULT": ['
-               '["backup_driver", "cinder.backup.drivers.ceph"], '
+               '["backup_driver", "'+backup_driver+'"], '
                '["backup_ceph_conf", '
                '"/var/lib/charm/cinder-backup/ceph.conf"], '
                '["backup_ceph_pool", "cinder-backup"], '
@@ -495,6 +499,11 @@ class CinderBackupBasicDeployment(OpenStackAmuletDeployment):
         unit_mq = self.rabbitmq_sentry
         rel_mq_ci = unit_mq.relation('amqp', 'cinder:amqp')
 
+        if self._get_openstack_release() >= self.bionic_stein:
+            backup_driver = 'cinder.backup.drivers.ceph.CephBackupDriver'
+        else:
+            backup_driver = 'cinder.backup.drivers.ceph'
+
         expected = {
             'DEFAULT': {
                 'use_syslog': 'False',
@@ -505,7 +514,7 @@ class CinderBackupBasicDeployment(OpenStackAmuletDeployment):
                 'auth_strategy': 'keystone',
                 'volumes_dir': '/var/lib/cinder/volumes',
                 'enabled_backends': 'cinder-ceph',
-                'backup_driver': 'cinder.backup.drivers.ceph',
+                'backup_driver': backup_driver,
                 'backup_ceph_pool': 'cinder-backup',
                 'backup_ceph_user': 'cinder-backup'
             },
