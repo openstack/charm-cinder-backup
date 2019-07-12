@@ -64,7 +64,7 @@ class CinderBackupBasicDeployment(OpenStackAmuletDeployment):
         # Note: cinder-backup becomes a cinder subordinate unit.
         this_service = {'name': 'cinder-backup'}
         other_services = [
-            {'name': 'percona-cluster'},
+            self.get_percona_service_entry(),
             {'name': 'keystone'},
             {'name': 'rabbitmq-server'},
             {'name': 'ceph-mon', 'units': 3},
