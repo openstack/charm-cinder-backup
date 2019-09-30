@@ -10,3 +10,4 @@ include:
     - contrib.network.ip
     - contrib.python
     - payload.execd
+    - contrib.openstack.policyd
