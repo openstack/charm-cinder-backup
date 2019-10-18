@@ -39,7 +39,6 @@ applications:
     num_units: 3
     options:
       monitor-count: '3'
-      auth-supported: 'none'
       source: cloud:bionic-train
   ceph-osd:
     charm: cs:~openstack-charmers-next/ceph-osd

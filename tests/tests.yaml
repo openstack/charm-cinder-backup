@@ -1,6 +1,6 @@
 charm_name: cinder-backup
 smoke_bundles:
-- bionic-stein
+- bionic-train
 gate_bundles:
   - trusty-mitaka
   - xenial-mitaka
@@ -10,6 +10,7 @@ gate_bundles:
   - bionic-queens
   - bionic-rocky
   - bionic-stein
+  - bionic-train
   - disco-stein
 dev_bundles:
   - bionic-train
