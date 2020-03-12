@@ -47,6 +47,7 @@ applications:
     storage:
       osd-devices: 'cinder,10G'
     options:
+      osd-devices: '/dev/test-non-existent'
       source: cloud:xenial-pike
   cinder:
     charm: cs:~openstack-charmers-next/cinder
