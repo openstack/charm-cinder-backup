@@ -12,6 +12,7 @@ series:
   - bionic
   - eoan
   - trusty
+  - focal
 subordinate: true
 provides:
   backup-backend:
