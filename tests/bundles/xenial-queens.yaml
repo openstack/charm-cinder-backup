@@ -20,29 +20,29 @@ relations:
   - rabbitmq-server:amqp
 applications:
   percona-cluster:
-    charm: cs:~openstack-charmers-next/percona-cluster
+    charm: cs:~openstack-charmers/percona-cluster
     num_units: 1
     options:
       innodb-buffer-pool-size: 256M
       max-connections: 1000
       source: cloud:xenial-queens
   keystone:
-    charm: cs:~openstack-charmers-next/keystone
+    charm: cs:~openstack-charmers/keystone
     num_units: 1
     options:
       openstack-origin: cloud:xenial-queens
   rabbitmq-server:
-    charm: cs:~openstack-charmers-next/rabbitmq-server
+    charm: cs:~openstack-charmers/rabbitmq-server
     num_units: 1
   ceph-mon:
-    charm: cs:~openstack-charmers-next/ceph-mon
+    charm: cs:~openstack-charmers/ceph-mon
     num_units: 3
     options:
       monitor-count: '3'
       auth-supported: 'none'
       source: cloud:xenial-queens
   ceph-osd:
-    charm: cs:~openstack-charmers-next/ceph-osd
+    charm: cs:~openstack-charmers/ceph-osd
     num_units: 3
     storage:
       osd-devices: 'cinder,10G'
@@ -50,7 +50,7 @@ applications:
       osd-devices: '/dev/test-non-existent'
       source: cloud:xenial-queens
   cinder:
-    charm: cs:~openstack-charmers-next/cinder
+    charm: cs:~openstack-charmers/cinder
     num_units: 1
     options:
       block-device: 'None'
@@ -62,6 +62,6 @@ applications:
     options:
       ceph-osd-replication-count: 3
   cinder-ceph:
-    charm: cs:~openstack-charmers-next/cinder-ceph
+    charm: cs:~openstack-charmers/cinder-ceph
     options:
       ceph-osd-replication-count: 3
