@@ -1,6 +1,6 @@
 name: cinder-backup
 summary: Cinder-backup integration for OpenStack Block Storage
-maintainer: Edward Hope-Morley <opentastic@gmail.com>
+maintainer: OpenStack Charmers <openstack-charmers@lists.ubuntu.com>
 description: |
   Cinder is the block storage service for the Openstack project.
   .

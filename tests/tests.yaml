@@ -1,6 +1,6 @@
 charm_name: cinder-backup
 smoke_bundles:
-- bionic-train
+  - bionic-train
 gate_bundles:
   - trusty-mitaka
   - xenial-mitaka
@@ -11,7 +11,9 @@ gate_bundles:
   - bionic-rocky
   - bionic-stein
   - bionic-train
+  - bionic-ussuri
 dev_bundles:
   - bionic-train
+  - focal-ussuri
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
