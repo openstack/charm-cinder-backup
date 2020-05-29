@@ -18,6 +18,16 @@ relations:
   - keystone:identity-service
 - - cinder:amqp
   - rabbitmq-server:amqp
+- - glance:image-service
+  - nova-compute:image-service
+- - glance:identity-service
+  - keystone:identity-service
+- - glance:shared-db
+  - percona-cluster:shared-db
+- - nova-compute:ceph-access
+  - cinder-ceph:ceph-access
+- - nova-compute:amqp
+  - rabbitmq-server:amqp
 applications:
   percona-cluster:
     charm: cs:~openstack-charmers-next/percona-cluster
@@ -64,3 +74,9 @@ applications:
     charm: cs:~openstack-charmers-next/cinder-ceph
     options:
       ceph-osd-replication-count: 3
+  glance:
+    charm: cs:~openstack-charmers-next/glance
+    num_units: 1
+  nova-compute:
+    charm: cs:~openstack-charmers-next/nova-compute
+    num_units: 1
