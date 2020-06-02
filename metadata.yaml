@@ -2,17 +2,18 @@ name: cinder-backup
 summary: Cinder-backup integration for OpenStack Block Storage
 maintainer: Edward Hope-Morley <opentastic@gmail.com>
 description: |
- Cinder is the block storage service for the Openstack project.
- .
- This subordinate charm configures the Cinder backup service.
+  Cinder is the block storage service for the Openstack project.
+  .
+  This subordinate charm configures the Cinder backup service.
 tags:
-  - miscellaneous
+- miscellaneous
 series:
-  - xenial
-  - bionic
-  - eoan
-  - trusty
-  - focal
+- xenial
+- bionic
+- eoan
+- trusty
+- focal
+- groovy
 subordinate: true
 provides:
   backup-backend:
