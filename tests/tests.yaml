@@ -13,7 +13,8 @@ gate_bundles:
   - bionic-train
   - bionic-ussuri
 dev_bundles:
-  - bionic-train
   - focal-ussuri
+  - focal-victoria
+  - groovy-victoria
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
