@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mock
+from unittest import mock
 
 with mock.patch('cinder_backup_utils.register_configs'):
     import cinder_backup_hooks as hooks
