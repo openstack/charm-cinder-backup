@@ -19,7 +19,3 @@ bin/charm_helpers_sync.py:
 
 sync: bin/charm_helpers_sync.py
 	@$(PYTHON) bin/charm_helpers_sync.py -c charm-helpers-hooks.yaml
-
-publish: lint unit_test
-	bzr push lp:charms/cinder-backup
-	bzr push lp:charms/trusty/cinder-backup
