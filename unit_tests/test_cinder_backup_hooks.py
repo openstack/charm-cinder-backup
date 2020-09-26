@@ -70,7 +70,8 @@ class TestCinderBackupHooks(CharmTestCase):
         self.log.assert_called_with(m)
 
     @mock.patch('charmhelpers.core.hookenv.config')
-    def test_ceph_changed(self, mock_config):
+    @mock.patch.object(hooks, 'get_ceph_request')
+    def test_ceph_changed(self, mock_get_ceph_request, mock_config):
         """It ensures ceph assets created on ceph changed"""
         self.is_request_complete.return_value = True
         self.CONFIGS.complete_contexts.return_value = ['ceph']

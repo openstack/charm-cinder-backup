@@ -35,7 +35,7 @@ def load_config():
 
     if not config:
         logging.error('Could not find config.yaml in any parent directory '
-                      'of %s.'.format(__file__))
+                      'of {}.'.format(__file__))
         raise Exception
 
     return yaml.safe_load(open(config).read())['options']
@@ -91,9 +91,9 @@ class TestConfig(object):
         return self.config
 
     def set(self, attr, value):
-            if attr not in self.config:
-                raise KeyError
-            self.config[attr] = value
+        if attr not in self.config:
+            raise KeyError
+        self.config[attr] = value
 
 
 class TestRelation(object):
