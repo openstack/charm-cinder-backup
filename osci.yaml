@@ -1,0 +1,15 @@
+- project:
+    templates:
+      - charm-unit-jobs
+      # Revert this to the project-template when trusty is actually
+      # removed from the charm-functional-jobs template
+      # - charm-functional-jobs
+    check:
+      jobs:
+      - xenial-mitaka
+      - bionic-queens
+      - bionic-stein
+      - bionic-train
+      - bionic-ussuri
+      - focal-victoria
+      - groovy-victoria
