@@ -10,9 +10,9 @@ tags:
 series:
 - xenial
 - bionic
-- trusty
 - focal
 - groovy
+- hirsute
 subordinate: true
 provides:
   backup-backend:
