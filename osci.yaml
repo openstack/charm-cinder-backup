@@ -12,4 +12,6 @@
       - bionic-train
       - bionic-ussuri
       - focal-victoria
+      - focal-wallaby
       - groovy-victoria
+      #- hirsute-wallaby
