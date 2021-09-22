@@ -13,5 +13,10 @@
       - bionic-ussuri
       - focal-victoria
       - focal-wallaby
+      - focal-xena:
+          voting: false
       - groovy-victoria
-      #- hirsute-wallaby
+      - hirsute-wallaby:
+          voting: false
+      - impish-xena:
+          voting: false

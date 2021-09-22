@@ -20,11 +20,14 @@ dev_bundles:
   - xenial-queens
   - bionic-rocky
   - focal-ussuri   # disabled because of lp:1891626
+  - focal-xena
   - hirsute-wallaby
+  - impish-xena
 
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
 
 tests_options:
   force_deploy:
-    - hirsute-wallaby
+    - groovy-victoria
+    - impish-xena
