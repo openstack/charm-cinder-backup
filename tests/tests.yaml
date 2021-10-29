@@ -1,33 +1,30 @@
 charm_name: cinder-backup
 
 smoke_bundles:
-  - bionic-train
+  - focal-ussuri
 
 gate_bundles:
-  - xenial-mitaka
   - bionic-queens
   - bionic-stein
-  - bionic-train
   - bionic-ussuri
+  - focal-ussuri
   - focal-victoria
   - focal-wallaby
-  - groovy-victoria
-
-dev_bundles:
-  - trusty-mitaka  # fails often because of lp:1877076
-  - xenial-ocata
-  - xenial-pike
-  - xenial-queens
-  - bionic-rocky
-  - focal-ussuri   # disabled because of lp:1891626
   - focal-xena
   - hirsute-wallaby
   - impish-xena
+
+dev_bundles:
+  - bionic-rocky
+  - bionic-train
+  - focal-yoga
+  - jammy-yoga
 
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
 
 tests_options:
   force_deploy:
-    - groovy-victoria
+    - hirsute-wallaby
     - impish-xena
+    - jammy-yoga
