@@ -8,10 +8,7 @@ description: |
 tags:
 - miscellaneous
 series:
-- bionic
 - focal
-- groovy
-- hirsute
 - impish
 subordinate: true
 provides:
