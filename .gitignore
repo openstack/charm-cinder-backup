@@ -7,3 +7,4 @@ bin
 *.pyc
 func-results.json
 .stestr
+*.charm
