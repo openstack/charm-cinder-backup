@@ -6,6 +6,7 @@ include:
     - osplatform
     - contrib.openstack|inc=*
     - contrib.storage
+    - contrib.hardware.pci
     - contrib.hahelpers
     - contrib.network.ip
     - contrib.python

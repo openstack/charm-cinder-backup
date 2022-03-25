@@ -9,7 +9,7 @@ tags:
 - miscellaneous
 series:
 - focal
-- impish
+- jammy
 subordinate: true
 provides:
   backup-backend:

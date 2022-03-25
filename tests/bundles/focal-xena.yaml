@@ -114,6 +114,8 @@ applications:
   glance:
     charm: ch:glance
     num_units: 1
+    options:
+      openstack-origin: *openstack-origin
     to:
       - '12'
     channel: yoga/edge
@@ -121,6 +123,8 @@ applications:
   nova-compute:
     charm: ch:nova-compute
     num_units: 1
+    options:
+      openstack-origin: *openstack-origin
     to:
       - '13'
     channel: yoga/edge
