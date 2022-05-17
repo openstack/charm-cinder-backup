@@ -8,12 +8,7 @@ description: |
 tags:
 - miscellaneous
 series:
-- xenial
-- bionic
 - focal
-- groovy
-- hirsute
-- impish
 subordinate: true
 provides:
   backup-backend:
