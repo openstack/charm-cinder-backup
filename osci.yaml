@@ -1,17 +1,9 @@
 - project:
     templates:
-      - charm-unit-jobs
-      # Revert this to the project-template when trusty is actually
-      # removed from the charm-functional-jobs template
-      # - charm-functional-jobs
-    check:
-      jobs:
-      - xenial-mitaka
-      - bionic-queens
-      - bionic-stein
-      - bionic-train
-      - bionic-ussuri
-      - focal-victoria
-      - focal-wallaby
-      - groovy-victoria
-      #- hirsute-wallaby
+      - charm-unit-jobs-py38
+      - charm-focal-ussuri-functional-jobs
+      - charm-victoria-functional-jobs
+    vars:
+      needs_charm_build: true
+      charm_build_name: cinder-backup
+      build_type: charmcraft
