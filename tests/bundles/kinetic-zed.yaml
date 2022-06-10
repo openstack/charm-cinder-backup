@@ -1,7 +1,7 @@
 variables:
   openstack-origin: &openstack-origin distro
 
-series: impish
+series: kinetic
 
 comment:
 - 'machines section to decide order of deployment. database sooner = faster'
@@ -54,7 +54,7 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '3'
-    channel: yoga/edge
+    channel: latest/edge
 
   rabbitmq-server:
     charm: ch:rabbitmq-server
@@ -73,7 +73,7 @@ applications:
       - '5'
       - '6'
       - '7'
-    channel: quincy/edge
+    channel: latest/edge
 
   ceph-osd:
     charm: ch:ceph-osd
@@ -87,7 +87,7 @@ applications:
       - '8'
       - '9'
       - '10'
-    channel: quincy/edge
+    channel: latest/edge
 
   cinder:
     charm: ch:cinder
@@ -98,7 +98,7 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '11'
-    channel: yoga/edge
+    channel: latest/edge
 
   cinder-backup:
     charm: ../../cinder-backup.charm
@@ -109,25 +109,25 @@ applications:
     charm: ch:cinder-ceph
     options:
       ceph-osd-replication-count: 3
-    channel: yoga/edge
+    channel: latest/edge
 
   glance:
     charm: ch:glance
     num_units: 1
     options:
-      source: *openstack-origin
+      openstack-origin: *openstack-origin
     to:
       - '12'
-    channel: yoga/edge
+    channel: latest/edge
 
   nova-compute:
     charm: ch:nova-compute
     num_units: 1
     options:
-      source: *openstack-origin
+      openstack-origin: *openstack-origin
     to:
       - '13'
-    channel: yoga/edge
+    channel: latest/edge
 
 relations:
 

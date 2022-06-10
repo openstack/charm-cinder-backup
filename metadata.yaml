@@ -8,7 +8,6 @@ description: |
 tags:
 - miscellaneous
 series:
-- focal
 - jammy
 subordinate: true
 provides:
