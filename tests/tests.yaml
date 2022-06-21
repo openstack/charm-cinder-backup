@@ -4,27 +4,15 @@ smoke_bundles:
   - bionic-train
 
 gate_bundles:
-  - xenial-mitaka
   - bionic-queens
+  - bionic-rocky
   - bionic-stein
   - bionic-train
-  - bionic-ussuri
-  - focal-victoria
-  - focal-wallaby
-  - groovy-victoria
 
-dev_bundles:
-  - trusty-mitaka  # fails often because of lp:1877076
-  - xenial-ocata
-  - xenial-pike
-  - xenial-queens
-  - bionic-rocky
-  - focal-ussuri   # disabled because of lp:1891626
-  - hirsute-wallaby
+dev_bundles: []
 
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
 
 tests_options:
-  force_deploy:
-    - hirsute-wallaby
+  force_deploy: []
