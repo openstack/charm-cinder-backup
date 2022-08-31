@@ -9,6 +9,7 @@ tags:
 - miscellaneous
 series:
 - jammy
+- kinetic
 subordinate: true
 provides:
   backup-backend:
