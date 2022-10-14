@@ -28,24 +28,22 @@ applications:
 
   keystone-mysql-router:
     charm: ch:mysql-router
-    channel: latest/edge
+    channel: 8.0/edge
   cinder-mysql-router:
     charm: ch:mysql-router
-    channel: latest/edge
+    channel: 8.0/edge
   glance-mysql-router:
     charm: ch:mysql-router
-    channel: latest/edge
+    channel: 8.0/edge
 
   mysql-innodb-cluster:
     charm: ch:mysql-innodb-cluster
     num_units: 3
-    options:
-      source: *openstack-origin
     to:
       - '0'
       - '1'
       - '2'
-    channel: latest/edge
+    channel: 8.0/edge
 
   keystone:
     charm: ch:keystone
@@ -54,26 +52,30 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '3'
-    channel: latest/edge
+    channel: zed/edge
 
   rabbitmq-server:
     charm: ch:rabbitmq-server
     num_units: 1
     to:
       - '4'
-    channel: latest/edge
+    channel: 3.9/edge
 
   ceph-mon:
     charm: ch:ceph-mon
     num_units: 3
     options:
       monitor-count: '3'
-      source: *openstack-origin
+      # Re-enable when quincy/edge is re-enabled.
+      # quincy/stable doesn't understand jammy-zed.
+      # source: *openstack-origin
     to:
       - '5'
       - '6'
       - '7'
-    channel: latest/edge
+    # Switch back to quincy/edge after this is fixed:
+    # https://bugs.launchpad.net/charm-ceph-mon/+bug/1995086
+    channel: quincy/stable
 
   ceph-osd:
     charm: ch:ceph-osd
@@ -82,12 +84,16 @@ applications:
       osd-devices: 'cinder,10G'
     options:
       osd-devices: '/dev/test-non-existent'
-      source: *openstack-origin
+      # Re-enable when quincy/edge is re-enabled.
+      # quincy/stable doesn't understand jammy-zed.
+      # source: *openstack-origin
     to:
       - '8'
       - '9'
       - '10'
-    channel: latest/edge
+    # Switch back to quincy/edge after this is fixed:
+    # https://bugs.launchpad.net/charm-ceph-mon/+bug/1995086
+    channel: quincy/stable
 
   cinder:
     charm: ch:cinder
@@ -98,7 +104,7 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '11'
-    channel: latest/edge
+    channel: zed/edge
 
   cinder-backup:
     charm: ../../cinder-backup.charm
@@ -109,7 +115,7 @@ applications:
     charm: ch:cinder-ceph
     options:
       ceph-osd-replication-count: 3
-    channel: latest/edge
+    channel: zed/edge
 
   glance:
     charm: ch:glance
@@ -118,7 +124,7 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '12'
-    channel: latest/edge
+    channel: zed/edge
 
   nova-compute:
     charm: ch:nova-compute
@@ -127,7 +133,7 @@ applications:
       openstack-origin: *openstack-origin
     to:
       - '13'
-    channel: latest/edge
+    channel: zed/edge
 
 relations:
 
