@@ -8,14 +8,14 @@ This charm provides a Cinder Backup component as part of OpenStack Cinder servic
 It is intended to be used alongside the other OpenStack components, even though it must
 have relation set up with core Cinder service.
 
+The below deployment instructions assume that a Ceph cluster and the Cinder
+service are pre-existing.
 
-To use:
+To deploy:
 
-    juju deploy cinder
-    juju deploy -n 3 ceph
-    juju deploy cinder-backup
-    juju add-relation cinder-backup cinder
-    juju add-relation cinder-backup ceph
+    juju deploy --channel <channel> cinder-backup
+    juju add-relation cinder-backup:backup-backend cinder:backup-backend
+    juju add-relation cinder-backup:ceph ceph-mon:client
 
 Configuration
 =============
