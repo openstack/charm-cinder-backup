@@ -1,15 +1,15 @@
 charm_name: cinder-backup
 
 smoke_bundles:
-  - jammy-yoga
+  - jammy-zed
 
 gate_bundles:
-  - jammy-yoga
+  - jammy-zed
 
 dev_bundles:
-  - jammy-yoga
-  - jammy-zed
+  - jammy-antelope
   - kinetic-zed
+  - lunar-antelope
 
 tests:
   - zaza.openstack.charm_tests.cinder_backup.tests.CinderBackupTest
@@ -17,3 +17,4 @@ tests:
 tests_options:
   force_deploy:
     - kinetic-zed
+    - lunar-antelope
