@@ -9,8 +9,8 @@ tags:
 - miscellaneous
 series:
 - jammy
-- kinetic
 - lunar
+- mantic
 subordinate: true
 provides:
   backup-backend:
