@@ -6,9 +6,10 @@ description: |
   .
   This subordinate charm configures the Cinder backup service.
 tags:
-  - miscellaneous
+- miscellaneous
 series:
-  - jammy
+- jammy
+- noble
 subordinate: true
 provides:
   backup-backend:
